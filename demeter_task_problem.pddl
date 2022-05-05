@@ -43,15 +43,15 @@
 
         (auv auv2)
         (empty auv2)
-        (at auv2 waypoint2) ; auv start at cable begin
+        (at auv2 waypoint0) ; auv start at cable begin
     )
     (:goal
         (and
-            (data-sent data1)
-            (data-sent data2)
-            (data-sent data3)
-            (data-sent data4)
-            (data-sent data5)
+            (data-send data1)
+            (data-send data2)
+            (data-send data3)
+            (data-send data4)
+            (data-send data5)
             (at auv1 waypoint0)
             (at auv2 waypoint0)
         )

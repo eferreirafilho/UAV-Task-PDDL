@@ -2,9 +2,12 @@
 ; No battery
 ; No action durations
 (define (domain demeter-task-domain-1)
-(:requirements :typing :strips)
+(:requirements :typing :strips :fluents)
 ;(:requirements :strips :fluents :durative-actions :timed-initial-literals :typing :conditional-effects :negative-preconditions :duration-inequalities :equality)
 
+;(:types
+;    data-retrieved
+;)
 
 (:predicates 
     (can-move ?from-waypoint ?to-waypoint)
@@ -13,12 +16,18 @@
     (carry ?auv ?data)
     (at ?auv ?waypoint)
     (is-at-surface ?waypoint)
-    (data-sent ?data)
+    (data-send ?data)
     (waypoint ?waypoint)
     (data ?data)
     (auv ?auv)
     (empty ?auv)
 )
+
+;(:functions
+;    (amount ?d - data-retrieved)
+;    (total)
+;)
+
 ;define actions here
 (:action move
     :parameters (?auv ?from-waypoint ?to-waypoint)
@@ -64,7 +73,7 @@
     :effect (and 
         (is-in ?data ?waypoint)
         (not (carry ?auv ?data))
-        (data-sent ?data)
+        (data-send ?data)
         (empty ?auv)        
         )
 )
