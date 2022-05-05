@@ -12,8 +12,9 @@
         ;Data from sensor
         data1 data2 data3 data4 data5
 
-        ;robot
+        ;robots
         auv1
+        auv2
     )
     (:init
         ; Initialize surface waypoints
@@ -34,9 +35,15 @@
         ; Define transmit data positions (cable start and surface waypoints)
         (is-at-surface waypoint0) (is-at-surface waypoint1) (is-at-surface waypoint2) (is-at-surface waypoint3) (is-at-surface waypoint4) (is-at-surface waypoint5)
 
+        
+        ; Multiple UAVs
         (auv auv1)
         (empty auv1)
         (at auv1 waypoint0) ; auv start at cable begin
+
+        (auv auv2)
+        (empty auv2)
+        (at auv2 waypoint2) ; auv start at cable begin
     )
     (:goal
         (and
@@ -46,6 +53,7 @@
             (data-sent data4)
             (data-sent data5)
             (at auv1 waypoint0)
+            (at auv2 waypoint0)
         )
     )
 )

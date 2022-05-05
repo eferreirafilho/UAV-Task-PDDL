@@ -1,4 +1,4 @@
-; Simple UAV read sensor domain
+; Multiple UAVs read sensor domain
 ; No battery
 ; No action durations
 (define (domain demeter-task-domain-1)
