@@ -5,7 +5,6 @@
 (:requirements :typing :strips)
 ;(:requirements :strips :fluents :durative-actions :timed-initial-literals :typing :conditional-effects :negative-preconditions :duration-inequalities :equality)
 
-
 (:predicates 
     (can-move ?from-waypoint ?to-waypoint)
     (is-in ?data ?sensor)
