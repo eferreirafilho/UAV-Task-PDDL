@@ -1,4 +1,4 @@
-; Simple UAV read sensor domain
+; Simple UAV read one sensor domain (tank demonstration)
 ; No battery
 ; No action durations
 (define (domain demeter-task-domain-1)
