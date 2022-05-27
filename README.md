@@ -6,6 +6,7 @@
 Goals: Dock with one sensor, get data, transmit while in surface;
 
 Assumptions:
-- No battery consumption
-- Only one AUV
-- Actions without duration
+- Several waypoints in the cable and only one waypoints is the sensor;
+- No battery consumption;
+- Only one AUV;
+- Actions without duration.
