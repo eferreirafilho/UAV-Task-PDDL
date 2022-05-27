@@ -3,9 +3,9 @@
 
 ### Task Planning for Spike Test
 
-Goals: Dock with M sensors, get data, transmit while in surface;
+Goals: Dock with one sensor, get data, transmit while in surface;
 
 Assumptions:
 - No battery consumption
 - Only one AUV
-- Actions with no duration
+- Actions without duration
