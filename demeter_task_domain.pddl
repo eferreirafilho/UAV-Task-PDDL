@@ -1,5 +1,9 @@
+
 ; Simple UAV read sensor domain
 ; With action durations
+(define (domain demeter-task-domain-1)
+(:requirements :typing :strips)
+;(:requirements :strips :fluents :durative-actions :timed-initial-literals :typing :conditional-effects :negative-preconditions :duration-inequalities :equality)
 
 (define (domain demeter-task-domain-1) 
     (:requirements :fluents :durative-actions)
