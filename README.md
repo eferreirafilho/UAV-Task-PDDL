@@ -3,7 +3,7 @@
 
 ### Task Planning for Spike Test
 
-Goals: Dock with M sensors, get data, transmit while submerged;
+Goals: Dock with M sensors, get data, transmit while in surface;
 
 Assumptions:
 - No battery consumption
