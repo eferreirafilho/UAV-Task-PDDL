@@ -1,8 +1,9 @@
 ; Define the problem
 ; Only one sensor in a specific waypoint
 ; Only one "Surface Waypoint"
-(define (problem demeter-tank-1)
-    (:domain demeter-task-domain-1
+(define (problem demeter-1)
+    (:domain
+        demeter-domain
     )
     (:objects
         ;Surface Waypoints
@@ -15,12 +16,12 @@
         data1
 
         ;robot
-        auv1
+        demeter1
     )
     (:init
 
         ; Initialize battery capacity
-        ;(= (battery-capacity) 100)
+        (= (battery-capacity) 100)
         ; Initialize Surface Waypoints
         (waypoint cable_start) (waypoint sensor_surface_waypoint)
         ; Initialize cable waypoints
@@ -41,33 +42,21 @@
         ; Define recharging points
         ;(is-recharging-point cable_start) (is-recharging-point sensor_surface_waypoint)
 
-        (auv auv1) ; create auv
-        (empty auv1) ; auv start without data
-        (at auv1 cable_start) ; auv start at cable start
-        ;(= (battery-amount auv1) 80) ; initial battery
+        (demeter demeter1) ; create demeter
+        (empty demeter1) ; demeter start without data
+        (at demeter1 cable_start) ; demeter start at cable start
+        (= (battery-amount demeter1) 10) ; initial battery
+        (= (recharge-rate demeter1) 10)
 
     )
     (:goal
         (and
             (data-sent data1) ; Data have been sent
-            (at auv1 cable_start) ; Auv has to finish in the surface
-            ;(= (battery-amount auv1) 100) ; Finish with recharged battery
-
-        ; Define data in sensors
-        (is-in data1 waypoint7)
-        ; Define transmit data positions (cable start and surface waypoints)
-        (is-at-surface sensor_surface_waypoint)
-
-        (auv auv1) ; create auv
-        (empty auv1) ; auv start without data
-        (at auv1 cable_start) ; auv start at cable start
-    )
-    (:goal
-        (and
-            (data-sent data1)
-            (at auv1 sensor_surface_waypoint)
+            (at demeter1 cable_start) ; demeter has to finish in the surface
+            (= (battery-amount demeter1) 100) ; Finish with recharged battery
         )
     )
+
     (:metric 
         minimize (total-time)   
     )
