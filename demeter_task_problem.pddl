@@ -46,7 +46,7 @@
         (empty demeter1) ; demeter start without data
         (at demeter1 cable_start) ; demeter start at cable start
         (= (battery-amount demeter1) 10) ; initial battery
-        (= (recharge-rate demeter1) 10)
+        (= (recharge-rate demeter1) 1)
 
     )
     (:goal
@@ -58,6 +58,7 @@
     )
 
     (:metric 
-        minimize (total-time)   
+        minimize (total-time)
+        ;maximize (battery-amount demeter1)
     )
 )

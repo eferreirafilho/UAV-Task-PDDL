@@ -3,7 +3,11 @@
 ; With action durations
 
 (define (domain demeter-domain) 
-    (:requirements :fluents :durative-actions :duration-inequalities)
+    (:requirements :typing :fluents :durative-actions :duration-inequalities)
+
+    ;(:types
+        
+    ;)
 
     (:functions
         (battery-amount ?demeter)
@@ -53,13 +57,13 @@
             (at start (is-in ?data ?waypoint))
             (over all (at ?demeter ?waypoint))
             (at start (empty ?demeter))
-            (at start (>= (battery-amount ?demeter) 5))
+            (at start (>= (battery-amount ?demeter) 50))
         )
         :effect (and 
             (at end (not (is-in ?data ?waypoint)))
             (at end (carry ?demeter ?data))
             (at end (not (empty ?demeter)))
-            (at start (decrease (battery-amount ?demeter) 5)) 
+            (at start (decrease (battery-amount ?demeter) 50)) 
     )
     )
     (:durative-action transmit-data
