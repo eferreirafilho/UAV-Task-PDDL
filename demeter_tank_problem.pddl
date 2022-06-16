@@ -19,6 +19,7 @@
         demeter1
     )
     (:init
+        
 
         ; Initialize battery capacity
         (= (battery-capacity) 100)

@@ -3,7 +3,7 @@
 ; With action durations
 
 (define (domain demeter-domain) 
-    (:requirements :typing :fluents :durative-actions :duration-inequalities)
+    (:requirements :fluents :durative-actions :duration-inequalities)
 
     ;(:types
         
