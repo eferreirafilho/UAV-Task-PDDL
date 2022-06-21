@@ -19,7 +19,6 @@
         vehicle1 - Vehicle
     )
     (:init
-        
 
         ; Initialize battery capacity
         (= (battery-capacity) 100)
@@ -37,7 +36,7 @@
         (at vehicle1 cable_start); (at vehicle2 cable_start); demeter start at cable start
         (= (battery-amount vehicle1) 50); (= (battery-amount vehicle2) 10) ; initial battery
         (= (recharge-rate vehicle1) 1); (= (recharge-rate vehicle2) 1) ; recharge rate
-
+        
     )
     (:goal
         (and
