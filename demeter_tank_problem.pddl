@@ -19,7 +19,6 @@
         vehicle1 - Vehicle
     )
     (:init
-        
 
         ; Initialize battery capacity
         (= (battery-capacity) 100)
