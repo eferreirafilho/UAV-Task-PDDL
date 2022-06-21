@@ -1,108 +1,108 @@
+
 ; Simple UAV read sensor domain
 ; With action durations
 
 (define (domain demeter-domain) 
-    (:requirements :typing :fluents :durative-actions :duration-inequalities :negative-preconditions)
+    (:requirements :fluents :durative-actions :duration-inequalities)
 
-    (:types
-        vehicle waypoint data   
-    )
+    ;(:types
+        
+    ;)
 
     (:functions
-        (battery-amount ?v - vehicle)
-        (recharge-rate ?v - vehicle)
+        (battery-amount ?demeter)
+        (recharge-rate ?demeter)
         (battery-capacity)
     )
 
     (:predicates 
-        (can-move ?x - waypoint ?y - waypoint)
-        (is-in ?d - data ?w - waypoint)
-        (been-at ?v - vehicle ?w - waypoint)
-        (carry ?v - vehicle ?d - data)
-        (at ?v - vehicle ?w - waypoint)
-        (is-at-surface ?w - waypoint)
-        (data-sent ?d - data)
-        ;(waypoint ?w - waypoint)
-        ;(data ?d - data)
-        ;(vehicle ?v - vehicle)
-        (empty ?v - vehicle)
-        (recharging ?v - vehicle)
+        (can-move ?from-waypoint ?to-waypoint)
+        (is-in ?data ?sensor)
+        (been-at ?demeter ?waypoint)
+        (carry ?demeter ?data)
+        (at ?demeter ?waypoint)
+        (is-at-surface ?waypoint)
+        (data-sent ?data)
+        (waypoint ?waypoint)
+        (data ?data)
+        (demeter ?demeter)
+        (empty ?demeter)
     )
     ;define actions here
     (:durative-action move
-        :parameters (?v - vehicle ?y ?z - waypoint)
+        :parameters (?demeter ?from-waypoint ?to-waypoint)
         :duration(= ?duration 2)
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (waypoint ?y))
-            ;(at start (waypoint ?z))
-            (over all (can-move ?y ?z)) 
-            (at start (at ?v ?y))
-            (at start (> (battery-amount ?v) 8)))
+            (at start (demeter ?demeter))
+            (at start (waypoint ?from-waypoint))
+            (at start (waypoint ?to-waypoint))
+            (over all (can-move ?from-waypoint ?to-waypoint)) 
+            (at start (at ?demeter ?from-waypoint))
+            (at start (> (battery-amount ?demeter) 8)))
            
         :effect (and 
-            (at end (at ?v ?z))
-            (at end (been-at ?v ?y))
-            (at start (not (at ?v ?y)))
-            (at start (decrease (battery-amount ?v) 8)))
+            (at end (at ?demeter ?to-waypoint))
+            (at end (been-at ?demeter ?to-waypoint))
+            (at start (not (at ?demeter ?from-waypoint)))
+            (at start (decrease (battery-amount ?demeter) 8)))
     )
     
     (:durative-action get-data
-        :parameters (?v - vehicle ?d - data ?w - waypoint)
+        :parameters (?demeter ?data ?waypoint)
         :duration(= ?duration 15)
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (data ?d))
-            ;(at start (waypoint ?w))
-            (at start (is-in ?d ?w))
-            (over all (at ?v ?w))
-            (at start (empty ?v))
-            (at start (>= (battery-amount ?v) 50))
+            (at start (demeter ?demeter))
+            (at start (data ?data))
+            (at start (waypoint ?waypoint))
+            (at start (is-in ?data ?waypoint))
+            (over all (at ?demeter ?waypoint))
+            (at start (empty ?demeter))
+            (at start (>= (battery-amount ?demeter) 50))
         )
         :effect (and 
-            (at end (not (is-in ?d ?w)))
-            (at end (carry ?v ?d))
-            (at end (not (empty ?v)))
-            (at start (decrease (battery-amount ?v) 50)) 
+            (at end (not (is-in ?data ?waypoint)))
+            (at end (carry ?demeter ?data))
+            (at end (not (empty ?demeter)))
+            (at start (decrease (battery-amount ?demeter) 50)) 
     )
     )
     (:durative-action transmit-data
-        :parameters (?v - vehicle ?d - data ?w - waypoint)
+        :parameters (?demeter ?data ?waypoint)
         :duration (= ?duration 10)
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (data ?d))
-            ;(at start (waypoint ?w))
-            (at start (is-at-surface ?w))
-            (over all (at ?v ?w))
-            (at start (carry ?v ?d))
-            (at start (> (battery-amount ?v) 2)))
+            (at start (demeter ?demeter))
+            (at start (data ?data))
+            (at start (waypoint ?waypoint))
+            (at start (is-at-surface ?waypoint))
+            (over all (at ?demeter ?waypoint))
+            (at start (carry ?demeter ?data))
+            (at start (> (battery-amount ?demeter) 2)))
         
         :effect (and 
-            (at end (is-in ?d ?w))
-            (at end (not (carry ?v ?d)))
-            (at end (data-sent ?d))
-            (at end (empty ?v))     
-            (at start (decrease (battery-amount ?v) 2))   
+            (at end (is-in ?data ?waypoint))
+            (at end (not (carry ?demeter ?data)))
+            (at end (data-sent ?data))
+            (at end (empty ?demeter))     
+            (at start (decrease (battery-amount ?demeter) 2))   
             )
     )
     (:durative-action recharge
-        :parameters (?v - vehicle ?w - waypoint)
+        :parameters (?demeter ?waypoint)
 
         :duration 
             (= ?duration 
-                (/ (- 100 (battery-amount ?v)) (recharge-rate ?v)))
+                (/ (- 80 (battery-amount ?demeter)) (recharge-rate ?demeter)))
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (waypoint ?w))
-            (at start (at ?v ?w))
-            (over all (is-at-surface ?w))
-            (at start (< (battery-amount ?v) 100))
-            ;(at start (recharging ?v))
+            (at start (demeter ?demeter))
+            (at start (waypoint ?waypoint))
+            (at start (at ?demeter ?waypoint))
+            (over all (is-at-surface ?waypoint))
+            (at start (< (battery-amount ?demeter) 80))
         )
-        :effect (and
-            (at end (increase (battery-amount ?v) (* ?duration (recharge-rate ?v))))
-        )
-            
+        :effect 
+            (at end 
+                (increase (battery-amount ?demeter) 
+                    (* ?duration (recharge-rate ?demeter))))
     )
 )
+
