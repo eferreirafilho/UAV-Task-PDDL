@@ -2,7 +2,7 @@
 ; With action durations
 
 (define (domain demeter-domain) 
-    (:requirements :typing :fluents :durative-actions :duration-inequalities)
+    (:requirements :typing :fluents :durative-actions :duration-inequalities :negative-preconditions)
 
     (:types
         vehicle waypoint data   
@@ -22,14 +22,15 @@
         (at ?v - vehicle ?w - waypoint)
         (is-at-surface ?w - waypoint)
         (data-sent ?d - data)
-        (waypoint ?w - waypoint)
-        (data ?d - data)
-        (vehicle ?v - vehicle)
+        ;(waypoint ?w - waypoint)
+        ;(data ?d - data)
+        ;(vehicle ?v - vehicle)
         (empty ?v - vehicle)
+        (recharging ?v - vehicle)
     )
     ;define actions here
     (:durative-action move
-        :parameters (?v - vehicle ?y - waypoint ?z - waypoint)
+        :parameters (?v - vehicle ?y ?z - waypoint)
         :duration(= ?duration 2)
         :condition (and 
             ;(at start (vehicle ?v))
@@ -40,8 +41,8 @@
             (at start (> (battery-amount ?v) 8)))
            
         :effect (and 
-            (at end (at ?v ?y))
-            (at end (been-at ?v ?z))
+            (at end (at ?v ?z))
+            (at end (been-at ?v ?y))
             (at start (not (at ?v ?y)))
             (at start (decrease (battery-amount ?v) 8)))
     )
@@ -90,17 +91,18 @@
 
         :duration 
             (= ?duration 
-                (/ (- 80 (battery-amount ?v)) (recharge-rate ?v)))
+                (/ (- 100 (battery-amount ?v)) (recharge-rate ?v)))
         :condition (and 
             ;(at start (vehicle ?v))
             ;(at start (waypoint ?w))
             (at start (at ?v ?w))
             (over all (is-at-surface ?w))
-            (at start (< (battery-amount ?v) 80))
+            (at start (< (battery-amount ?v) 100))
+            ;(at start (recharging ?v))
         )
-        :effect 
-            (at end 
-                (increase (battery-amount ?v) 
-                    (* ?duration (recharge-rate ?v))))
+        :effect (and
+            (at end (increase (battery-amount ?v) (* ?duration (recharge-rate ?v))))
+        )
+            
     )
 )
