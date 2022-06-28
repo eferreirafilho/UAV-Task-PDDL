@@ -1,0 +1,7 @@
+;;!domain: hello
+;;!problem: hello-world
+
+0.00100: (say-hello world)
+
+; Makespan: 0.001
+; Metric: 0.001

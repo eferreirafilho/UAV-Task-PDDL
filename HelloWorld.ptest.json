@@ -1,0 +1,10 @@
+{
+    "defaultDomain": "HelloWorldDomain.pddl",
+    "defaultOptions": "",
+    "cases": [
+        {
+            "problem": "HelloWorldProblem.pddl"
+        }
+    ]
+
+}

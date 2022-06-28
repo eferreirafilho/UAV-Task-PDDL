@@ -14,7 +14,7 @@
         (battery-capacity)
     )
 
-    (:predicates 
+    (:predicates
         (can-move ?x - waypoint ?y - waypoint)
         (is-in ?d - data ?w - waypoint)
         (been-at ?v - vehicle ?w - waypoint)
