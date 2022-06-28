@@ -12,6 +12,9 @@
         (battery-amount ?v - vehicle)
         (recharge-rate ?v - vehicle)
         (battery-capacity)
+        (traverse-cost ?v - vehicle ?f - waypoint ?t - waypoint )
+        ;(sum-traverse-cost)
+        
     )
 
     (:predicates
@@ -38,13 +41,15 @@
             ;(at start (waypoint ?z))
             (over all (can-move ?y ?z)) 
             (at start (at ?v ?y))
-            (at start (> (battery-amount ?v) 8)))
+            (at start (> (battery-amount ?v) (traverse-cost ?v ?y ?z))))
            
         :effect (and 
             (at end (at ?v ?z))
             (at end (been-at ?v ?y))
             (at start (not (at ?v ?y)))
-            (at start (decrease (battery-amount ?v) 8)))
+            (at start (decrease (battery-amount ?v) (traverse-cost ?v ?y ?z)))
+            ;(at end (increase (sum-traverse-cost) (traverse-cost ?v ?y ?z)))
+            )
     )
     
     (:durative-action get-data

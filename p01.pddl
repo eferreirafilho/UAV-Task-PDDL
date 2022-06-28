@@ -1,7 +1,7 @@
 ; Define the problem
 ; Only one sensor in a specific waypoint
 ; Only one "Surface Waypoint"
-(define (problem demeter-1)
+(define (problem p01)
     (:domain
         demeter-domain
     )
@@ -36,7 +36,39 @@
         (at vehicle1 cable_start); (at vehicle2 cable_start); demeter start at cable start
         (= (battery-amount vehicle1) 50); (= (battery-amount vehicle2) 10) ; initial battery
         (= (recharge-rate vehicle1) 1); (= (recharge-rate vehicle2) 1) ; recharge rate
-        
+        ; Traverse cost between allowable waypoints
+        (= (traverse-cost vehicle1 cable_start waypoint1) 3)
+        (= (traverse-cost vehicle1 waypoint1 waypoint2) 1)
+        (= (traverse-cost vehicle1 waypoint2 waypoint3) 1.2)
+        (= (traverse-cost vehicle1 waypoint3 waypoint4) 1.4)
+        (= (traverse-cost vehicle1 waypoint4 waypoint5) 1.6)
+        (= (traverse-cost vehicle1 waypoint5 waypoint6) 1.8)
+        (= (traverse-cost vehicle1 waypoint6 waypoint7) 2)
+        (= (traverse-cost vehicle1 waypoint7 waypoint8) 2.2)
+        (= (traverse-cost vehicle1 waypoint8 waypoint9) 2.4)
+        (= (traverse-cost vehicle1 waypoint9 waypoint10) 2.6)
+        (= (traverse-cost vehicle1 waypoint1 cable_start) 3)
+        (= (traverse-cost vehicle1 waypoint10 waypoint9) 2.6)
+        (= (traverse-cost vehicle1 waypoint9 waypoint8) 2.4)
+        (= (traverse-cost vehicle1 waypoint8 waypoint7) 2.2)
+        (= (traverse-cost vehicle1 waypoint7 waypoint6) 2)
+        (= (traverse-cost vehicle1 waypoint6 waypoint5) 1.8)
+        (= (traverse-cost vehicle1 waypoint5 waypoint4) 1.6)
+        (= (traverse-cost vehicle1 waypoint4 waypoint3) 1.4)
+        (= (traverse-cost vehicle1 waypoint3 waypoint2) 1.2)
+        (= (traverse-cost vehicle1 waypoint2 waypoint1) 1)
+        (= (traverse-cost vehicle1 waypoint1 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint2 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint3 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint4 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint5 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint6 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint7 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint8 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint9 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 waypoint10 sensor_surface_waypoint) 5)
+        (= (traverse-cost vehicle1 sensor_surface_waypoint cable_start) 5)            
+
     )
     (:goal
         (and
@@ -48,6 +80,7 @@
 
     (:metric 
         minimize (total-time)
+        ;minimize (sum-traverse-cost)
         ;maximize (battery-amount vehicle1)
     )
 )
