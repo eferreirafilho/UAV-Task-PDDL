@@ -13,7 +13,7 @@
         (recharge-rate ?v - vehicle)
         (battery-capacity)
         (traverse-cost ?v - vehicle ?f - waypoint ?t - waypoint )
-        (sum-traverse-cost)
+        ;(sum-traverse-cost)
         
     )
 
@@ -48,7 +48,7 @@
             (at end (been-at ?v ?y))
             (at start (not (at ?v ?y)))
             (at start (decrease (battery-amount ?v) (traverse-cost ?v ?y ?z)))
-            (at end (increase (sum-traverse-cost) (traverse-cost ?v ?y ?z)))
+            ;(at end (increase (sum-traverse-cost) (traverse-cost ?v ?y ?z)))
             )
     )
     
