@@ -12,9 +12,6 @@
         (battery-amount ?v - vehicle)
         (recharge-rate ?v - vehicle)
         (battery-capacity)
-        (traverse-cost ?v - vehicle ?f - waypoint ?t - waypoint )
-        ;(sum-traverse-cost)
-        
     )
 
     (:predicates
@@ -25,9 +22,6 @@
         (at ?v - vehicle ?w - waypoint)
         (is-at-surface ?w - waypoint)
         (data-sent ?d - data)
-        ;(waypoint ?w - waypoint)
-        ;(data ?d - data)
-        ;(vehicle ?v - vehicle)
         (empty ?v - vehicle)
         (recharging ?v - vehicle)
     )
@@ -36,29 +30,23 @@
         :parameters (?v - vehicle ?y ?z - waypoint)
         :duration(= ?duration 2)
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (waypoint ?y))
-            ;(at start (waypoint ?z))
             (over all (can-move ?y ?z)) 
             (at start (at ?v ?y))
-            (at start (> (battery-amount ?v) (traverse-cost ?v ?y ?z))))
-           
+            (at start (> (battery-amount ?v) 2))
+        )
         :effect (and 
             (at end (at ?v ?z))
             (at end (been-at ?v ?y))
             (at start (not (at ?v ?y)))
-            (at start (decrease (battery-amount ?v) (traverse-cost ?v ?y ?z)))
-            ;(at end (increase (sum-traverse-cost) (traverse-cost ?v ?y ?z)))
+            (at start (decrease (battery-amount ?v) 2))
             )
     )
     
+    ; Get sensor data form underwater waypoint - Fixed time
     (:durative-action get-data
         :parameters (?v - vehicle ?d - data ?w - waypoint)
         :duration(= ?duration 15)
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (data ?d))
-            ;(at start (waypoint ?w))
             (at start (is-in ?d ?w))
             (over all (at ?v ?w))
             (at start (empty ?v))
@@ -71,13 +59,11 @@
             (at start (decrease (battery-amount ?v) 50)) 
     )
     )
+    ; Transmit Sensor from surface
     (:durative-action transmit-data
         :parameters (?v - vehicle ?d - data ?w - waypoint)
         :duration (= ?duration 10)
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (data ?d))
-            ;(at start (waypoint ?w))
             (at start (is-at-surface ?w))
             (over all (at ?v ?w))
             (at start (carry ?v ?d))
@@ -91,6 +77,7 @@
             (at start (decrease (battery-amount ?v) 2))   
             )
     )
+    ; Recharge, when in surface
     (:durative-action recharge
         :parameters (?v - vehicle ?w - waypoint)
 
@@ -98,12 +85,9 @@
             (= ?duration 
                 (/ (- 100 (battery-amount ?v)) (recharge-rate ?v)))
         :condition (and 
-            ;(at start (vehicle ?v))
-            ;(at start (waypoint ?w))
             (at start (at ?v ?w))
             (over all (is-at-surface ?w))
             (at start (< (battery-amount ?v) 100))
-            ;(at start (recharging ?v))
         )
         :effect (and
             (at end (increase (battery-amount ?v) (* ?duration (recharge-rate ?v))))
