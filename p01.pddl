@@ -12,6 +12,8 @@
         ;Cable Waypoints Sensors
         waypoint1 waypoint2 waypoint3 waypoint4 waypoint5 waypoint6 waypoint7 waypoint8 waypoint9 waypoint10 - Waypoint
 
+
+        
         ;Data from sensor
         data1 - Data
 
@@ -43,7 +45,7 @@
         (= (traverse-cost vehicle1 waypoint3 waypoint4) 1.4)
         (= (traverse-cost vehicle1 waypoint4 waypoint5) 1.6)
         (= (traverse-cost vehicle1 waypoint5 waypoint6) 1.8)
-        (= (traverse-cost vehicle1 waypoint6 waypoint7) 2)
+        (= (traverse-cost vehicle1 waypoint6 waypoint7) 2)             
         (= (traverse-cost vehicle1 waypoint7 waypoint8) 2.2)
         (= (traverse-cost vehicle1 waypoint8 waypoint9) 2.4)
         (= (traverse-cost vehicle1 waypoint9 waypoint10) 2.6)
