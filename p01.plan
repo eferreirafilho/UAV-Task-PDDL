@@ -1,0 +1,21 @@
+;;!domain: demeter-domain
+;;!problem: p01
+
+0.00000: (recharge vehicle1 cable_start) [50.00000]
+50.00100: (move vehicle1 cable_start waypoint1) [2.00000]
+52.00200: (move vehicle1 waypoint1 waypoint2) [2.00000]
+54.00300: (move vehicle1 waypoint2 waypoint3) [2.00000]
+56.00400: (move vehicle1 waypoint3 waypoint4) [2.00000]
+58.00500: (move vehicle1 waypoint4 waypoint5) [2.00000]
+60.00600: (move vehicle1 waypoint5 waypoint6) [2.00000]
+62.00700: (move vehicle1 waypoint6 waypoint7) [2.00000]
+64.00700: (get-data vehicle1 data1 waypoint7) [15.00000]
+79.00700: (move vehicle1 waypoint7 sensor_surface_waypoint) [2.00000]
+81.00800: (recharge vehicle1 sensor_surface_waypoint) [67.00000]
+81.00900: (transmit-data vehicle1 data1 sensor_surface_waypoint) [10.00000]
+91.00900: (move vehicle1 sensor_surface_waypoint cable_start) [2.00000]
+148.00900: (recharge vehicle1 cable_start) [7.00000]
+
+; Makespan: 155.009
+; Metric: 155.009
+; States evaluated: 1841

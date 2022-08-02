@@ -48,6 +48,5 @@
 
     (:metric 
         minimize (total-time)
-        ;maximize (battery-amount vehicle1)
     )
 )
